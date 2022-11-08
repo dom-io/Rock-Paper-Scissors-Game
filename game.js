@@ -1,3 +1,8 @@
+let playerSelection;
+let computerSelection;
+let playerScore = 0;
+let computerScore = 0;
+
 // Creates the computer's random choice
 const computerChoice = function () {
   let randomComputerChoice = Math.floor(Math.random() * 3);
@@ -10,43 +15,37 @@ const computerChoice = function () {
   }
 };
 
-const playRound = function (playerSelectionLower, computerSelection) {
-  if (playerSelectionLower === computerSelection) {
+// Plays one round
+const playRound = function (playerSelection, computerSelection) {
+  playerSelection = prompt("Choose Rock, Paper, or Scissors!");
+  playerSelection = playerSelection.toLowerCase();
+  computerSelection = computerChoice();
+  if (playerSelection === computerSelection) {
     return "It's a draw!";
-  } else if (playerSelectionLower == "rock") {
-    if (computerSelection == "paper") {
-      return "The computer has won! 👎";
-    } else {
-      return "You have won! 👍";
-    }
-  } else if (playerSelectionLower == "paper") {
-    if (computerSelection == "scissors") {
-      return "The computer has won! 👎";
-    } else {
-      return "You have won! 👍";
-    }
-  } else if (playerSelectionLower == "scissors") {
-    if (computerSelection == "rock") {
-      return "The computer has won! 👎";
-    } else {
-      return "You have won! 👍";
-    }
+  } else if (
+    (playerSelection == "rock" && computerSelection == "scissors") ||
+    (playerSelection == "scissors" && computerSelection == "paper") ||
+    (playerSelection == "paper" && computerSelection == "rock")
+  ) {
+    playerScore++;
+    return "You have won! 👍";
+  } else if (
+    (computerSelection == "rock" && playerSelection == "scissors") ||
+    (computerSelection == "scissors" && playerSelection == "paper") ||
+    (computerSelection == "paper" && playerSelection == "rock")
+  ) {
+    computerScore++;
+    return "The computer has won! 👎";
   }
 };
 
-const playerSelection = prompt("Choose!");
-const playerSelectionLower = playerSelection.toLowerCase();
-const computerSelection = computerChoice();
-
-console.log(playerSelection);
-console.log(computerSelection);
-console.log(playRound(playerSelectionLower, computerSelection));
-
+// Loops through the game 5 times
 const game = function () {
-  for (let i = 0; i < 5; i++) {
-    console.log(i + 1);
-    if (playRound()) {
-    }
+  for (let i = 1; i < 6; i++) {
+    console.log(playRound());
   }
 };
-console.log(game());
+
+game();
+console.log(playerScore);
+console.log(computerScore);
